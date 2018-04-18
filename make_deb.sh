@@ -90,4 +90,7 @@ sudo rm -r -f ${PATH_TO_WORK}
 
 mv  nsw-$scriptName.deb ${PATH_TO_PACKAGE}/
 
+cp ${PATH_TO_PACKAGE}/nsw-$scriptName.deb  /home/pc/Dropbox/DP/konfigurace/ansible/roles/detection/files/
+
+
               
