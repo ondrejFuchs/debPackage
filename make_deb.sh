@@ -46,7 +46,7 @@ ExecStart=/usr/bin/python  /usr/bin/$scriptName.py
 Restart=always
 
 [Install]
-WantedBy=multi-user.target" > ${PATH_TO_WORK}/etc/systemd/system/diod.service
+WantedBy=multi-user.target" > ${PATH_TO_WORK}/etc/systemd/system/$scriptName.service
 
 echo "Package: nsw-$scriptName
 Version: 1.0
