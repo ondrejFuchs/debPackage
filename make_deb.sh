@@ -36,36 +36,19 @@ test -f $filename || touch $filename
 chmod 775 $filename
 
 
-if [ "$scriptName" == "power" ]; then
-  echo "Type forking"
-  echo "[Unit]
+echo "[Unit]
 Description=$scriptName
-Documentation=Check open the box
 Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=forking
+Type=simple
 ExecStart=/usr/bin/python  /usr/bin/$scriptName.py
 Restart=always
+ExecStop=/bin/kill -s TERM $MAINPID
 
 [Install]
 WantedBy=multi-user.target" > ${PATH_TO_WORK}/etc/systemd/system/$scriptName.service
-else
-  echo "[Unit]
-Description=$scriptName
-Documentation=Check open the box
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-ExecStart=/usr/bin/python  /usr/bin/$scriptName.py
-Restart=always
-
-[Install]
-WantedBy=multi-user.target" > ${PATH_TO_WORK}/etc/systemd/system/$scriptName.service
-fi
-
 
 
 echo "Package: nsw-$scriptName
