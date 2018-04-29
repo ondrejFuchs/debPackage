@@ -17,7 +17,7 @@ mkdir -p DEBIAN
 mkdir -p usr/bin
 mkdir -p etc/systemd/system
 
-cp -a -n /home/pc/DP/GPIO/$scriptName.py ${PATH_TO_WORK}/usr/bin/diod.py
+cp -a -n /home/pc/DP/GPIO/$scriptName.py ${PATH_TO_WORK}/usr/bin/$scriptName.py
 
 filename=${PATH_TO_WORK}/etc/systemd/system/$scriptName.service
 test -f $filename || touch $filename
@@ -84,7 +84,7 @@ sudo chown -hR root:root work
 # sudo dpkg-deb -b filebeat nsw-filebeat-1.0.deb
 sudo dpkg-deb -b work nsw-$scriptName.deb
 
-echo "App: Build $scriptName.deb"
+echo "App: Build nsw-$scriptName.deb"
 
 sudo rm -r -f ${PATH_TO_WORK}
 
