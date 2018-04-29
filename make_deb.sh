@@ -35,7 +35,24 @@ filename=${PATH_TO_WORK}/DEBIAN/postinst
 test -f $filename || touch $filename
 chmod 775 $filename
 
-echo "[Unit]
+
+if [ "$scriptName" == "power" ]; then
+  echo "Type forking"
+  echo "[Unit]
+Description=$scriptName
+Documentation=Check open the box
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/python  /usr/bin/$scriptName.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target" > ${PATH_TO_WORK}/etc/systemd/system/$scriptName.service
+else
+  echo "[Unit]
 Description=$scriptName
 Documentation=Check open the box
 Wants=network-online.target
@@ -47,6 +64,9 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target" > ${PATH_TO_WORK}/etc/systemd/system/$scriptName.service
+fi
+
+
 
 echo "Package: nsw-$scriptName
 Version: 1.0
