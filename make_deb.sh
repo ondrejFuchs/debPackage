@@ -1,7 +1,12 @@
 #!/bin/bash
 
-scriptName=$1
-
+# Control of param
+if [ "$1" != "diod" ] && [ "$1" != "power" ] && [ "$1" != "box" ]; then
+  echo "Script for detection has name: diod|power|box."
+  exit 1
+else
+  scriptName=$1
+fi
 # Path to home
 HOMEPATH="$(readlink -f .)"
 
@@ -31,9 +36,9 @@ test -f $filename || touch $filename
 filename=${PATH_TO_WORK}/DEBIAN/copyright
 test -f $filename || touch $filename
 
-filename=${PATH_TO_WORK}/DEBIAN/postinst
-test -f $filename || touch $filename
-chmod 775 $filename
+#filename=${PATH_TO_WORK}/DEBIAN/postinst
+#test -f $filename || touch $filename
+#chmod 775 $filename
 
 
 echo "[Unit]
@@ -70,10 +75,10 @@ echo "# Changelog
 All notable changes to this project will be documented in this file.
 " > ${PATH_TO_WORK}/DEBIAN/changelog
 
-echo "#!/bin/sh
-sudo systemctl enable $scriptName
-sudo service $scriptName start
-" > ${PATH_TO_WORK}/DEBIAN/postinst
+#echo "#!/bin/sh
+#sudo systemctl enable $scriptName
+#sudo service $scriptName start
+#" > ${PATH_TO_WORK}/DEBIAN/postinst
 
 cd ${PATH_TO_WORK}
 find * -type f ! -regex '^DEBIAN/.*' -exec md5sum {} \; > DEBIAN/md5sums
@@ -83,8 +88,6 @@ echo "App: Structure of folder is ready to make .deb"
 cd ${PATH_TO_WORK}
 cd ..
 sudo chown -hR root:root work
-# dpkg didn't accept "_"
-# sudo dpkg-deb -b filebeat nsw-filebeat-1.0.deb
 sudo dpkg-deb -b work nsw-$scriptName.deb
 
 echo "App: Build nsw-$scriptName.deb"
