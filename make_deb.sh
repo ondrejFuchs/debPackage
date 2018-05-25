@@ -47,7 +47,7 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=simple
+Type=forking
 ExecStart=/usr/bin/python  /usr/bin/$scriptName.py
 Restart=always
 ExecStop=/bin/kill -s TERM $MAINPID
